@@ -45,6 +45,8 @@ window.addEventListener('load', async () => {
   // No web3 provider
   else {
       console.log('No web3 provider detected');
+      //using http provider instead
+      window.web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/81ad8e62ebbe4002bc9e40fdfbd18b92"));
   }
 });
 console.log (window.web3.currentProvider)
@@ -55,6 +57,11 @@ var abi = JSON.parse( '[{"constant":true,"inputs":[],"name":"getInfo","outputs":
 
 //contract instance
 contract = new web3.eth.Contract(abi, contractAddress);
+
+
+//contract stats
+
+
 
 // Accounts
 var account;
@@ -88,7 +95,26 @@ function registerGetInfo() {
     document.getElementById('lastInfo').innerHTML = info;
   });
 }
+
+function getBalance() {
+        var address, wei, balance
+        address = 0xC5687bD97877F096712D400c92938835d5ef62F8
+        try {
+            web3.eth.getBalance(address, function (error, wei) {
+                if (!error) {
+                    var balance = web3.fromWei(wei, 'ether');
+                    document.getElementById("output").innerHTML = balance + " ETH";
+                }
+            });
+        } catch (err) {
+            document.getElementById("output").innerHTML = err;
+        }
+    }
+
+    
     </script>
+
+
 
 </head>
 
@@ -108,7 +134,9 @@ function registerGetInfo() {
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">The first male-centric, community powered, social network.</h1>
+          <h1 class="mb-5">The first male-centric, community powered, social network.
+          </h1>
+          <p id="output"></p>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form>
