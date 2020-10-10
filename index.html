@@ -22,9 +22,40 @@
   <link href="css/landing-page.css" rel="stylesheet">
   <link href="css/dashboard.css" rel="stylesheet">
 
-  <script type="text/javascript" src="js/web3.min.js"></script>
+  <script src="js/web3.min.js"></script>
     <script type="text/javascript" src="js/human_standard_token_abi.js"></script>
     <script type="text/javascript" src="js/erc20balance.js"></script>
+
+    <script>
+    
+    window.addEventListener('load', async () => {
+      // Modern dapp browsers...
+      if (window.ethereum) {
+          window.web3 = new Web3(ethereum);
+          try {
+              // Request account access if needed
+              await ethereum.enable();
+              getERC20Balance();
+              
+              // Acccounts now exposed
+              // web3.eth.sendTransaction({/* ... */});
+          } catch (error) {
+              // User denied account access...
+          }
+      }
+      // Legacy dapp browsers...
+      else if (window.web3) {
+          window.web3 = new Web3(web3.currentProvider);
+          getERC20Balance();
+          // Acccounts always exposed
+          // web3.eth.sendTransaction({/* ... */});
+      }
+      // Non-dapp browsers...
+      else {
+          console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+      }
+  });
+  </script>
 </head>
 
 <body>
@@ -33,13 +64,15 @@
   <nav class="navbar fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#"><img class="logo" src="img/The_DudeCoin_Company_Logo_small_bck.png" height="70"></a>
-      <div style="width:50%">
+      <div class="container">
+        <div>
         <script src="https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js"></script>
         <coingecko-coin-price-marquee-widget  coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="usd" background-color="#151618c48420" locale="en">
 
         </coingecko-coin-price-marquee-widget>
       </div>
-      <a class="btn btn-primary" onclick="initWeb3()" href="#">Connect with Metamask</a>
+    </div>
+      <!-- <a class="btn btn-primary" href="#">Connect with Metamask</a>  -->
     </div>
   </nav>
 
@@ -61,7 +94,7 @@
           <p>Contract Value</p>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link"  id="output2" href="#">
             <span data-feather="shopping-cart"></span>
             0000
           </a>
@@ -69,7 +102,7 @@
           <p>My Tokens</p>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="output2" href="#">
+          <a class="nav-link" href="#">
             <span data-feather="users"></span>
             0000
           </a>
@@ -202,7 +235,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-          <ul class="list-inline mb-2">
+          <!-- <ul class="list-inline mb-2">
             <li class="list-inline-item">
               <a href="#">About</a>
             </li>
@@ -218,8 +251,8 @@
             <li class="list-inline-item">
               <a href="#">Privacy Policy</a>
             </li>
-          </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Dudecoin 2020. All Rights Reserved.</p>
+          </ul> -->
+          <!-- <p class="text-muted small mb-4 mb-lg-0">&copy; Dudecoin 2020. All Rights Reserved.</p> -->
         </div>
         <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
           <ul class="list-inline mb-0">

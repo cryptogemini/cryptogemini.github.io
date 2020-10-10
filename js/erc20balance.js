@@ -8,6 +8,7 @@ window.addEventListener('load', function () {
     }
 })
 
+
 const promisify = (inner) =>
     new Promise((resolve, reject) =>
         inner((err, res) => {
@@ -37,23 +38,24 @@ async function getBalance() {
 
 window.addEventListener('load', function() {
     getBalance();
+    
 });
 
-function initWeb3() {
-    if (typeof web3 !== 'undefined') {
-        console.log('Web3 Detected! ' + web3.currentProvider.constructor.name)
-        window.web3 = new Web3(web3.currentProvider);
-    } else {
-        console.log('No Web3 Detected... using HTTP Provider')
-        window.web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/81ad8e62ebbe4002bc9e40fdfbd18b92"));
-    }
-}
+// function initWeb3() {
+//     if (typeof web3 !== 'undefined') {
+//         console.log('Web3 Detected! ' + web3.currentProvider.constructor.name)
+//         window.web3 = new Web3(web3.currentProvider);
+//     } else {
+//         console.log('No Web3 Detected... using HTTP Provider')
+//         window.web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/81ad8e62ebbe4002bc9e40fdfbd18b92"));
+//     }
+// }
 
 
 async function getERC20Balance() {
     var address, contractAddress, contractABI, tokenContract, decimals, balance, name, symbol, adjustedBalance
     address = web3.eth.accounts[0];
-    contractAddress = document.getElementById("contractAddress").value
+    contractAddress = "0xC5687bD97877F096712D400c92938835d5ef62F8"
     contractABI = human_standard_token_abi
 
     tokenContract = web3.eth.contract(contractABI).at(contractAddress)
@@ -64,12 +66,18 @@ async function getERC20Balance() {
     symbol = promisify(cb => tokenContract.symbol(cb))
 
     try {
-        adjustedBalance = await balance / Math.pow(10, await decimals)
+        adjustedBalance = await balance / Math.pow(10, await decimals);
+        console.log(adjustedBalance);
         document.getElementById("output2").innerHTML = adjustedBalance;
-        document.getElementById("output2").innerHTML += " " + await symbol + " (" + await name + ")";
+        // document.getElementById("output2").innerHTML += " " + await symbol + " (" + await name + ")";
     } catch (error) {
         document.getElementById("output2").innerHTML = error;
     }
 }
+
+window.addEventListener('load', function() {
+    getBalance();
+});
+
 
 

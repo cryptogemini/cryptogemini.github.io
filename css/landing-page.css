@@ -27,6 +27,7 @@ h6 {
 .navbar .container {
   margin-left:0;
   margin-right: 0;
+  flex-wrap: nowrap;
 }
 
 
