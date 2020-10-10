@@ -20,113 +20,68 @@
 
   <!-- Custom styles for this template -->
   <link href="css/landing-page.css" rel="stylesheet">
+  <link href="css/dashboard.css" rel="stylesheet">
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.js"></script>
-    <script type="text/javascript">
-    // web3 provider with fallback for old version
-window.addEventListener('load', async () => {
-  // New web3 provider
-  if (window.ethereum) {
-      window.web3 = new Web3(ethereum);
-      try {
-          // ask user for permission
-          await ethereum.enable();
-          // user approved permission
-      } catch (error) {
-          // user rejected permission
-          console.log('user rejected permission');
-      }
-  }
-  // Old web3 provider
-  else if (window.web3) {
-      window.web3 = new Web3(web3.currentProvider);
-      // no need to ask for permission
-  }
-  // No web3 provider
-  else {
-      console.log('No web3 provider detected');
-      //using http provider instead
-      window.web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/81ad8e62ebbe4002bc9e40fdfbd18b92"));
-  }
-});
-console.log (window.web3.currentProvider)
-
-// contractAddress and abi are setted after contract deploy
-var contractAddress = '0xc864D0fef177A69aFa8E302A1b90e450910A4c3E';
-var abi = JSON.parse( '[{"constant":true,"inputs":[],"name":"getInfo","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_info","type":"string"}],"name":"setInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]' );
-
-//contract instance
-contract = new web3.eth.Contract(abi, contractAddress);
-
-
-//contract stats
-
-
-
-// Accounts
-var account;
-
-web3.eth.getAccounts(function(err, accounts) {
-  if (err != null) {
-    alert("Error retrieving accounts.");
-    return;
-  }
-  if (accounts.length == 0) {
-    alert("No account found! Make sure the Ethereum client is configured properly.");
-    return;
-  }
-  account = accounts[0];
-  console.log('Account: ' + account);
-  web3.eth.defaultAccount = account;
-});
-
-//Smart contract functions
-function registerSetInfo() {
-  info = $("#newInfo").val();
-  contract.methods.setInfo (info).send( {from: account}).then( function(tx) {
-    console.log("Transaction: ", tx);
-  });
-  $("#newInfo").val('');
-}
-
-function registerGetInfo() {
-  contract.methods.getInfo().call().then( function( info ) {
-    console.log("info: ", info);
-    document.getElementById('lastInfo').innerHTML = info;
-  });
-}
-
-function getBalance() {
-        var address, wei, balance
-        address = 0xC5687bD97877F096712D400c92938835d5ef62F8
-        try {
-            web3.eth.getBalance(address, function (error, wei) {
-                if (!error) {
-                    var balance = web3.fromWei(wei, 'ether');
-                    document.getElementById("output").innerHTML = balance + " ETH";
-                }
-            });
-        } catch (err) {
-            document.getElementById("output").innerHTML = err;
-        }
-    }
-
-    
-    </script>
-
-
-
+  <script type="text/javascript" src="js/web3.min.js"></script>
+    <script type="text/javascript" src="js/human_standard_token_abi.js"></script>
+    <script type="text/javascript" src="js/erc20balance.js"></script>
 </head>
 
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar static-top">
+  <nav class="navbar fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#"><img class="logo" src="img/The_DudeCoin_Company_Logo_small_bck.png" height="70"></a>
-      <a class="btn btn-primary" href="#">Connect with Metamask</a>
+      <div style="width:50%">
+        <script src="https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js"></script>
+        <coingecko-coin-price-marquee-widget  coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="usd" background-color="#151618c48420" locale="en">
+
+        </coingecko-coin-price-marquee-widget>
+      </div>
+      <a class="btn btn-primary" onclick="initWeb3()" href="#">Connect with Metamask</a>
     </div>
   </nav>
+
+  <nav class="col-md-2 d-none d-md-block bg-none sidebar">
+    <div class="sidebar-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            <span data-feather="home"></span>
+            Dashboard <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="outputusd" href="#">
+            <span data-feather="file"></span>
+            <h1>Orders</h1>
+            
+          </a>
+          <p>Contract Value</p>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="shopping-cart"></span>
+            0000
+          </a>
+
+          <p>My Tokens</p>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="output2" href="#">
+            <span data-feather="users"></span>
+            0000
+          </a>
+
+          <p>Referral Earnings</p>
+        </li>
+       
+      </ul>
+
+      
+  </nav>
+  
 
   <!-- Masthead -->
   <header class="masthead text-white text-center">
@@ -134,21 +89,25 @@ function getBalance() {
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">The first male-centric, community powered, social network.
-          </h1>
-          <p id="output"></p>
+          <h1 id="output">Number here</h1>
+          <h3 class="mb-5"><i>Paid out in $DUDE</i></h1>
+          
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-              </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
-              </div>
+          <div >
+          <h1><input type="text" style="text-align: center; color: white; width: 100%; background-color: #000; opacity: 0.5;" placeholder="0.0000"></h1>
+          
+          </div>
+          <div style="width: 100%; display: table;">
+            <div style="display: table-row; height: 50px;">
+                <button class="btn btn-primary" style="width: 50%; display: table-cell; background-color: green; border-color: green;">
+                   <h1> Buy </h1>
+                </button>
+                <button class="btn btn-primary" style="width: 50%; display: table-cell;"> 
+                  
+                  <h1> Sell </h1>
+                </div>
             </div>
-          </form>
         </div>
       </div>
     </div>
@@ -157,30 +116,30 @@ function getBalance() {
   <!-- Icons Grid -->
   <section class="features-icons bg-light text-center">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
+      <div class="row adjusted-right">
+        <div class="col-md-4">
           <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
+            <!-- <div class="features-icons-icon d-flex">
               <i class="icon-screen-desktop m-auto text-primary"></i>
-            </div>
+            </div> -->
             <h3>420,000,000</h3>
             <p class="lead mb-0">Total Dude Supply</p>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
           <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
+            <!-- <div class="features-icons-icon d-flex">
               <i class="icon-layers m-auto text-primary"></i>
-            </div>
+            </div> -->
             <h3>69,000,000</h3>
             <p class="lead mb-0">Available $DUDE Rewards</p>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
           <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
+            <!-- <div class="features-icons-icon d-flex">
               <i class="icon-check m-auto text-primary"></i>
-            </div>
+            </div> -->
             <h3>69</h3>
             <p class="lead mb-0">Total DUDES added</p>
           </div>
