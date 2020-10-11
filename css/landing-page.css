@@ -175,6 +175,30 @@ header.masthead h1 {
   .adjusted-right {
     padding-left:0;
   }
+
+  header.masthead h1 {
+    font-size: 1.77em;
+  }
+
+  .contract_amt_sub {
+    font-size: 1em;
+  }
+
+  .community {
+    padding-top: 0;
+  }
+
+  .community h3{
+    font-size: 1.35em;
+  }
+
+  .community p {
+    font-size: 1em;
+  }
+
+  .community .container .row .col-md-6 {
+    padding-bottom: 40px;
+  }
 }
 
 
