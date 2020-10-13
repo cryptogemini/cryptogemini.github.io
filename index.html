@@ -55,6 +55,26 @@
           console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
       }
   });
+
+  const initPayButton = () => {
+      $('.pay-button').click(() => {
+        // paymentAddress is where funds will be send to
+        const paymentAddress = '0x192c96bfee59158441f26101b2db1af3b07feb40'
+        const amountEth = 1
+        web3.eth.sendTransaction({
+          to: paymentAddress,
+          value: web3.toWei(amountEth, 'ether')
+        }, (err, transactionId) => {
+          if  (err) {
+            console.log('Payment failed', err)
+            $('#status').html('Payment failed')
+          } else {
+            console.log('Payment successful', transactionId)
+            $('#status').html('Payment successful')
+          }
+        })
+      })
+    }
   </script>
 </head>
 
@@ -128,18 +148,18 @@
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <div >
-          <h2><input type="text" style="text-align: center; color: white; width: 100%; background-color: #000; opacity: 0.5;" placeholder="0.0000"></h2>
+          <h1><input type="text" style="text-align: center; color: white; width: 75%; background-color: #000; opacity: 0.5;" placeholder="0000"></h2>
           
           </div>
           <div style="width: 100%; display: table;">
             <div style="display: table-row; height: 50px;">
-                <button class="btn btn-primary" style="margin-right: 50px; width: 25%; display: table-cell;">
-                   <h3> Buy </h3>
+                <button class="btn btn-primary pay-button" onclick="initPayButton()" style=" width: 75%; display: table-cell;">
+                   <h4> Buy </h4>
                 </button>
-                <button class="btn btn-primary" style="width: 25%; display: table-cell; background-color: transparent;"> 
+                <!-- <button class="btn btn-primary" style="width: 25%; display: table-cell; background-color: transparent;"> 
                   
                   <h3> Sell </h3>
-                </div>
+                </div> -->
             </div>
         </div>
       </div>
