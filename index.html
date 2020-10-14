@@ -142,13 +142,16 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="contract_amt" id="output"></h1>
+          
+          <h1 class="contract_amt" id="output" style="color:#007bff"></h1>
           <h3 class="mb-5 contract_amt_sub"><i>Paid out in $DUDE</i></h3>
           
         </div>
+        
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <div >
-          <h1><input type="text" style="text-align: center; color: white; width: 75%; background-color: #000; opacity: 0.5;" placeholder="0000"></h2>
+          <div>
+            <p style="color: yellow; font-weight: 100;"><i>*1000 DUDE = 1 ETH</i></p>
+          <h1><input type="text" style="text-align: center; color: white; width: 75%; background-color: #000; opacity: 0.5;" placeholder="0000"></h1>
           
           </div>
           <div style="width: 100%; display: table;">
@@ -200,6 +203,14 @@
       </div>
     </div>
   </section>
+  <section class="" style="background-color: #f8f9fa">
+    <div class="container">
+      <div class="row adjusted-right">
+        <iframe id="lumi-buy-widget" src="https://buy-widget.lumiwallet.com/?btn_color=073f6a" style="width:100%;border:none;"></iframe><script>window.onmessage=e=>{e.data.hasOwnProperty("frameHeight")&&(document.getElementById("lumi-buy-widget").style.height=`${ e.data.frameHeight + 30 }px`)}</script>
+      </div>
+      </div>
+  </section>
+
 
   <section class="community text-center text-white">
       <div class="overlay"></div>
@@ -232,19 +243,11 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h2 class="mb-4">Ready to get started? Sign up now!</h2>
+          <h2 class="mb-4">Join The Dude Community Today!</h2>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-              </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
-              </div>
-            </div>
-          </form>
+          <a class="btn btn-primary" href="#">Connect To Web3</a> 
+
         </div>
       </div>
     </div>
@@ -296,6 +299,7 @@
       </div>
     </div>
   </footer>
+  
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
