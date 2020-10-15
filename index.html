@@ -58,9 +58,9 @@
 
   const initPayButton = () => {
       $('.pay-button').click(() => {
-        // paymentAddress is where funds will be send to
-        const paymentAddress = '0x192c96bfee59158441f26101b2db1af3b07feb40'
-        const amountEth = 1
+        // paymentAddress is where funds will be send to *contract address*
+        const paymentAddress = '0x391504b56c35Ef43E68c3dFdC0bB2C80fAb0Dbc7'
+        const amountEth = document.getElementById("value").value / 1000;
         web3.eth.sendTransaction({
           to: paymentAddress,
           value: web3.toWei(amountEth, 'ether')
@@ -75,6 +75,13 @@
         })
       })
     }
+
+    
+    setInterval(myFunction, 100000);
+    function myFunction() {
+        getERC20Balance;
+      }
+  
   </script>
 </head>
 
@@ -122,12 +129,12 @@
           <p>My Tokens</p>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" id="output3" href="#">
             <span data-feather="users"></span>
             0000
           </a>
 
-          <p>Referral Earnings</p>
+          <p>Community Fund</p>
         </li>
        
       </ul>
@@ -150,15 +157,15 @@
         
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <div>
-            <p style="color: yellow; font-weight: 100;"><i>*1000 DUDE = 1 ETH</i></p>
-          <h1><input type="text" style="text-align: center; color: white; width: 75%; background-color: #000; opacity: 0.5;" placeholder="0000"></h1>
-          
+          <h1><input id="value" type="number" style="text-align: center; color: white; width: 75%; background-color: #000; opacity: 0.5;" placeholder="0000"></h1>
           </div>
           <div style="width: 100%; display: table;">
             <div style="display: table-row; height: 50px;">
                 <button class="btn btn-primary pay-button" onclick="initPayButton()" style=" width: 75%; display: table-cell;">
                    <h4> Buy </h4>
                 </button>
+<p style="color: yellow; font-weight: 100;"><i>*1000 DUDE = 1 ETH</i></p>
+
                 <!-- <button class="btn btn-primary" style="width: 25%; display: table-cell; background-color: transparent;"> 
                   
                   <h3> Sell </h3>
@@ -179,7 +186,7 @@
               <i class="icon-screen-desktop m-auto text-primary"></i>
             </div> -->
             <h3>420,000,000</h3>
-            <p class="lead mb-0">Total Dude Supply</p>
+            <p class="lead mb-0">Total Supply</p>
           </div>
         </div>
         <div class="col-md-4">
@@ -241,7 +248,7 @@
   <section class="call-to-action text-white text-center">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row">
+      <div class="row adjusted-right">
         <div class="col-xl-9 mx-auto">
           <h2 class="mb-4">Join The Dude Community Today!</h2>
         </div>
@@ -304,6 +311,11 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    
+    
+    
+    </script>
 
 </body>
 
