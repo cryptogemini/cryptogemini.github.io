@@ -42,7 +42,7 @@ async function getCommunityFundBalance() {
     wei = promisify(cb => web3.eth.getBalance(address, cb))
     try {
         balance = web3.fromWei(await wei, 'ether')
-        document.getElementById("output3").innerHTML = balance + " ETH";
+        document.getElementById("output3").innerHTML = balance.toFixed(4) + " ETH";
         document.getElementById("outputusd").innerHTML = balance + " ETH";
     } catch (error) {
         document.getElementById("output3").innerHTML = error;
